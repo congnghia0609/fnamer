@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 
+// https://codelabs.developers.google.com/codelabs/first-flutter-app-pt1
+// https://codelabs.developers.google.com/codelabs/first-flutter-app-pt2
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
