@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // baby_names
 // https://codelabs.developers.google.com/codelabs/flutter-firebase/#0
-// https://github.com/googlecodelabs/flutter-cupertino-store
+// https://console.firebase.google.com/project/fbaby-e30c2/database/firestore/data~2Fbaby
 void main() {
   runApp(MyApp());
 }
