@@ -1,88 +1,109 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
-import 'package:fnamer/cupertino/product_list_tab.dart';
-import 'package:fnamer/cupertino/search_tab.dart';
-import 'package:fnamer/cupertino/shopping_cart_tab.dart';
-import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
-import 'package:fnamer/cupertino/model/app_state_model.dart';
-
-// cupertino_store
-// https://codelabs.developers.google.com/codelabs/flutter-cupertino/#0
+// baby_names
+// https://codelabs.developers.google.com/codelabs/flutter-firebase/#0
 // https://github.com/googlecodelabs/flutter-cupertino-store
 void main() {
-  // This app is designed only to work vertically, so we limit orientations to portrait up and down.
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-
-  runApp(
-    ChangeNotifierProvider<AppStateModel>(
-      builder: (context) => AppStateModel()..loadProducts(),
-//      model: model,
-      child: MyApp(),
-    ),
-  );
+  runApp(MyApp());
 }
 
-// CupertinoStoreApp
+final dummySnapshot = [
+  {"name": "Filip", "votes": 15},
+  {"name": "Abraham", "votes": 14},
+  {"name": "Richard", "votes": 11},
+  {"name": "Ike", "votes": 10},
+  {"name": "Justin", "votes": 1},
+];
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new CupertinoApp(
-      home: new CupertinoStoreHomePage(),
+    return MaterialApp(
+      title: 'Baby Names',
+      home: MyHomePage(),
     );
   }
 }
 
-class CupertinoStoreHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() {
+    return _MyHomePageState();
+  }
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.home),
-            title: Text("Products"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.search),
-            title: Text("Search"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.shopping_cart),
-            title: Text("Cart"),
-          )
-        ],
-      ),
-      tabBuilder: (context, index) {
-        CupertinoTabView returnValue;
-        switch (index) {
-          case 0:
-            return CupertinoTabView(
-              builder: (context) {
-                return CupertinoPageScaffold(
-                  child: ProductListTab(),
-                );
-              },
-            );
-          case 1:
-            return CupertinoTabView(
-              builder: (context) {
-                return CupertinoPageScaffold(
-                  child: SearchTab(),
-                );
-              },
-            );
-          case 2:
-            return CupertinoTabView(
-              builder: (context) {
-                return CupertinoPageScaffold(
-                  child: ShoppingCartTab(),
-                );
-              },
-            );
+    return Scaffold(
+      appBar: AppBar(title: Text('Baby Name Votes')),
+      body: _buildBody(context),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    // TODO: get actual snapshot from Cloud Firestore
+    //return _buildList(context, dummySnapshot);
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('baby').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return LinearProgressIndicator();
         }
-        return returnValue;
+        return _buildList(context, snapshot.data.documents);
       },
     );
   }
+
+//  Widget _buildList(BuildContext context, List<Map> snapshot) {
+  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+    return ListView(
+      padding: const EdgeInsets.only(top: 20.0),
+      children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+    );
+  }
+
+//  Widget _buildListItem(BuildContext context, Map data) {
+  Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
+//    final record = Record.fromMap(data);
+    final record = Record.fromSnapshot(data);
+
+    return Padding(
+      key: ValueKey(record.name),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        child: ListTile(
+          title: Text(record.name),
+          trailing: Text(record.votes.toString()),
+          //onTap: () => print(record),
+          // race condition
+          //onTap: () => record.reference.updateData({'votes': record.votes + 1}),
+          // Update data atomically
+          onTap: () => record.reference.updateData({'votes': FieldValue.increment(1)}),
+        ),
+      ),
+    );
+  }
+}
+
+class Record {
+  final String name;
+  final int votes;
+  final DocumentReference reference;
+
+  Record.fromMap(Map<String, dynamic> map, {this.reference})
+      : assert(map['name'] != null),
+        assert(map['votes'] != null),
+        name = map['name'],
+        votes = map['votes'];
+
+  Record.fromSnapshot(DocumentSnapshot snapshot) : this.fromMap(snapshot.data, reference: snapshot.reference);
+
+  @override
+  String toString() => "Record<$name:$votes>";
 }

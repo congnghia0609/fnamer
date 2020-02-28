@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "839205915020",
+    "firebase_url": "https://fbaby-e30c2.firebaseio.com",
+    "project_id": "fbaby-e30c2",
+    "storage_bucket": "fbaby-e30c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839205915020:android:d301d4cf213ce19814aea9",
+        "android_client_info": {
+          "package_name": "com.ntc.fnamer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "839205915020-uma2493a3c8o0e2bidprfta2bhqkmn1j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ntc.fnamer",
+            "certificate_hash": "5a3cc17f0591a91b20aca723b2e9cd38fc1a547e"
+          }
+        },
+        {
+          "client_id": "839205915020-vbr3m06nj3k49sqio5kqtntf3ge6oupt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9zF5vxv-GX6QWVwVt1LLRr-rFcsOW4x0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "839205915020-vbr3m06nj3k49sqio5kqtntf3ge6oupt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
