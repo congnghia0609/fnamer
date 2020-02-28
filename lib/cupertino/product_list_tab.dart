@@ -21,7 +21,7 @@ class ProductListTab extends StatelessWidget {
               minimum: const EdgeInsets.only(top: 8),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
-                      (context, index) {
+                  (context, index) {
                     if (index < products.length) {
                       return ProductRowItem(
                         index: index,
@@ -29,7 +29,6 @@ class ProductListTab extends StatelessWidget {
                         lastItem: index == products.length - 1,
                       );
                     }
-
                     return null;
                   },
                 ),
