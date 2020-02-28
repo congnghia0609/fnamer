@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:fnamer/product_list_tab.dart';
-import 'package:fnamer/search_tab.dart';
-import 'package:fnamer/shopping_cart_tab.dart';
+import 'package:fnamer/cupertino/product_list_tab.dart';
+import 'package:fnamer/cupertino/search_tab.dart';
+import 'package:fnamer/cupertino/shopping_cart_tab.dart';
 import 'package:provider/provider.dart';
 
-import 'model/app_state_model.dart';
+import 'package:fnamer/cupertino/model/app_state_model.dart';
 
 // cupertino_store
 // https://codelabs.developers.google.com/codelabs/flutter-cupertino/#0

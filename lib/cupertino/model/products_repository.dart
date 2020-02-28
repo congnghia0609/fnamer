@@ -1,4 +1,4 @@
-import 'package:fnamer/model/product.dart';
+import 'package:fnamer/cupertino/model/product.dart';
 
 class ProductsRepository {
   static const _allProducts = <Product>[

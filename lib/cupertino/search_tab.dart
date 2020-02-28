@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:fnamer/product_row_item.dart';
-import 'package:fnamer/search_bar.dart';
-import 'package:fnamer/styles.dart';
+import 'package:fnamer/cupertino/product_row_item.dart';
+import 'package:fnamer/cupertino/search_bar.dart';
+import 'package:fnamer/cupertino/styles.dart';
 import 'package:provider/provider.dart';
 
-import 'model/app_state_model.dart';
+import 'package:fnamer/cupertino/model/app_state_model.dart';
 
 class SearchTab extends StatefulWidget {
   @override

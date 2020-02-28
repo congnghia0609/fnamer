@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart' as foundation;
-import 'package:fnamer/model/product.dart';
-import 'package:fnamer/model/products_repository.dart';
+import 'package:fnamer/cupertino/model/product.dart';
+import 'package:fnamer/cupertino/model/products_repository.dart';
 
 double _salesTaxRate = 0.06;
 double _shippingCostPerItem = 7;
